@@ -43,7 +43,8 @@ const DropDown = (({logout, setting}) => {
       <a
         href="#"
         class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
-        onClick={setting}
+        onClick={setting
+        }
       >
         <div className="mr-3">
           <svg
