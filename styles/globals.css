@@ -1,0 +1,11 @@
+
+
+/* button */
+input[type="button"], button, .button {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.form-content {
+    height: 30rem;
+}
