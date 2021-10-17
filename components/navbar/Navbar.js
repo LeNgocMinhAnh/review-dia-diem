@@ -37,12 +37,13 @@ export default function Navbar({ user, signout }) {
   );
 }
 
-const DropDown = (({logout}) => {
+const DropDown = (({logout, setting}) => {
   return (
     <div class="absolute  w-40 mt-2 py-2 px-1.5  bg-FDF5E6  rounded shadow-xl">
       <a
         href="#"
         class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        onClick={setting}
       >
         <div className="mr-3">
           <svg
@@ -110,6 +111,10 @@ const UserSetting = memo(({ user }) => {
     //  router.push("/")
   };
 
+  const setting = () =>{
+    router.push("/user/setting")
+  }
+
   if (user === undefined) {
     return null;
   }
@@ -129,8 +134,8 @@ const UserSetting = memo(({ user }) => {
     <div className=" mr-5">
       <div className="flex justify-center items-center  space-x-1">
         <img
-          className="h-10 w-10 rounded-full mx-auto "
-          src={user.displayImage}
+          className="h-11 w-11 rounded-full mx-auto "
+          src={user.photoURL}
           onClick={showDropdown}
         />
         <div className="">{user.displayImage}</div>
@@ -138,7 +143,7 @@ const UserSetting = memo(({ user }) => {
           {user.displayName}
         </div>
       </div>
-      {show? <DropDown  logout={logout}></DropDown>: null}
+      {show? <DropDown  logout={logout} setting={setting}></DropDown>: null}
     </div>
   );
 });
