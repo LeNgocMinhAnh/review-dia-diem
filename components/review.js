@@ -4,8 +4,8 @@ import { formatTime } from "../services/time";
 
 export default function Review({ place, reviews }) {
   return reviews.map((review, index) => (
-    <div key={review.id} className="p-4 md:p-8 w-full border-gray-200 border-0">
-      <div className="flex items-start ">
+    <div key={review.id} className="p-4 md:p-8 w-full border-gray-200 border-0 divide-y divide-gray-300 ">
+      <div className="flex items-start   ">
         <div className="flex-shrink-0">
           <div className="inline-block relative">
             <div className="relative w-16 h-16 rounded-full overflow-hidden">
@@ -101,6 +101,7 @@ export default function Review({ place, reviews }) {
           </div>
         </div>
       </div>
+      <hr className=""></hr>
     </div>
   ));
 }
