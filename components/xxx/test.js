@@ -34,7 +34,7 @@ export default function test({ reviews, place, user }) {
 
         <div className="container mx-auto relative  md:-mt-6 mb-16">
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-y-4 xl:gap-x-4">
-          <div className="col-span-2 bg-gray-100 rounded-md">
+          <div className="col-span-2 bg-xanhlo rounded-md">
             <Review reviews={reviews}/>
           </div>
           <div className="bg-gray-100 rounded-md">

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import StarRatings from "react-star-ratings";
-import {formatTime} from "../services/time"
-
+import { formatTime } from "../services/time";
 
 export default function Review({ place, reviews }) {
   return reviews.map((review, index) => (
@@ -48,7 +47,7 @@ export default function Review({ place, reviews }) {
               numberOfStars={5}
               starDimension="15px"
               name="rating"
-              starSpacing	="3px"
+              starSpacing="3px"
             />
           </div>
 
@@ -61,6 +60,11 @@ export default function Review({ place, reviews }) {
             <span className="font-bold">{review.title}</span>
             <p className="not-italic whitespace-pre-wrap">{review.content}</p>
           </div>
+          {review.images.length > 0? <div className="grid grid-cols-5 gap-2 py-2">
+            {review.images.map((src) => <img key={src} className="h-40 w-full object-cover" src={src} /> )}
+          </div> :null}
+          
+
           <div className="flex items-center justify-between mt-4 text-sm text-gray-600 fill-current">
             <button className="flex items-center">
               <svg
