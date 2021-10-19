@@ -1,14 +1,15 @@
 import StarRatings from "react-star-ratings";
 import { useState, createRef, useCallback } from "react";
 import { postReview, uploadImages } from "../../services/api";
-
+import { toast } from 'react-toastify';
 export default function ReviewForm({ visible, place, hideRatingShow }) {
   const [star, setStar] = useState(5);
   const [images, setImages] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
-  const titRef = createRef();
-  const contentRef = createRef();
-  const incognitoRef = createRef();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [incognito, setIncognito] = useState(false);
 
   const fileInputRef = createRef();
   const onClickAttachImage = useCallback (() => {
@@ -18,45 +19,53 @@ export default function ReviewForm({ visible, place, hideRatingShow }) {
     const files = [];
     for (let i = 0; i < Math.min(event.target.files.length, 5); i++){
       files.push(event.target.files[i]);
-    }
-    console.log(files)
+    }    
     setImages(files);
   }, [])
 
   const submitReview = useCallback(async(event) => {
-    event.preventDefault();
+    event.preventDefault();      
+
+    if (title.length < 6){
+      return toast.error("Tiêu đề quá ngắn")
+    }
+
+    if (content.length < 10){
+      return toast.error("Nội dung quá ngắn")
+    }
+
+    setLoading(true);
     const uploadedImages = [];
     // Upload hình
     if(images.length>0){
-      const { data, status: uploadStatus } = await uploadImages(images);
+      const { data: data2, status: uploadStatus } = await uploadImages(images);
       if (uploadStatus === 201){
-        uploadedImages.push(...data);
+        uploadedImages.push(...data2);
       }
       
     }
 
-    const { status } = await postReview(
-      place.slug,
-      {
-        star, 
-        title: titRef.current?.value,
-        content: contentRef.current?.value,
-        incognito: incognitoRef.current?.checked,
-        images: uploadedImages
-      }
-      
-    )
+
+    const data = {
+      star, 
+      title,
+      content,
+      incognito,
+      images: uploadedImages
+    }    
+    console.log(data);
+
+    const { status } = await postReview(place.slug, data);
     if (status === 201) {
       console.log(status)
       window.location.reload();
+    } else {
+      setLoading(false);
     }
-  }, [images, place, titRef, contentRef, star, incognitoRef]);
+  }, [images, place, title, content, star, incognito]);
 
-  if (!visible) {
-    return null;
-  }
   return (
-    <div className=" transition-all duration-500 fixed backdrop-opacity-50 bg-black bg-opacity-70 inset-0 z-99">
+    <div className={visible ? " transition-all duration-500 fixed backdrop-opacity-50 bg-black bg-opacity-70 inset-0 z-99" : 'hidden'}>
     <div className="flex justify-center h-screen items-center antialiased">
       <div
         className=" flex bg-gray-50 flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
@@ -99,20 +108,24 @@ export default function ReviewForm({ visible, place, hideRatingShow }) {
             type="text"
             name=""
             placeholder="Nhập tiêu đề review"
-            className="p-3 mb-5 bg-white border border-gray-200 rounded shadow-sm"
+            className="p-3 bg-white border border-gray-200 rounded shadow-sm"
             id=""
-            ref={titRef}
-          />
-          <p className="mb-2 font-semibold text-gray-700">Nội dung</p>
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />          
+          <p className="mt-4 font-semibold text-gray-700">Nội dung</p>
           
-            <div className="w-full flex"><textarea
+          <div className="w-full flex">
+            <textarea
               type="text"
               name=""        
               placeholder="Nhập nội dung review, tối thiểu 10 ký tự..."
               className="w-full p-5 mb-5 h-24 min-h-24 bg-white border border-gray-200 rounded shadow-sm h-36"
               id=""
-              ref={contentRef}
-            /></div>
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </div>
           <div className="flex items-center justify-between select-none">
             <div className="flex items-center mb-3 space-x-2">
               <input
@@ -120,7 +133,8 @@ export default function ReviewForm({ visible, place, hideRatingShow }) {
                 type="checkbox"
                 id="check1"
                 name="check1"
-                ref={incognitoRef}
+                checked={incognito}
+                onChange={(e) => setIncognito(e.target.checked)}
               />
               <label className="inline-flex font-semibold text-gray-700 cursor-pointer" htmlFor="check1">
                 Đăng ẩn danh
@@ -165,8 +179,11 @@ export default function ReviewForm({ visible, place, hideRatingShow }) {
           className="flex flex-row items-center justify-between py-4 px-6 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg"
         >
           <p onClick={hideRatingShow} className="cursor-pointer font-semibold text-gray-600 hover:text-gray-800">Hủy</p>
-          <button  onClick={submitReview} className="px-4 py-2 text-white font-semibold bg-blue-500 rounded">
-            Đăng
+          <button  onClick={submitReview} className="px-4 py-2 flex items-center text-white font-semibold bg-blue-500 rounded">
+            {isLoading ? <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg> : 'Đăng'}            
           </button>
         </div>
       </div>

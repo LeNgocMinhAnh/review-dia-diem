@@ -3,7 +3,8 @@ import Search from '../components/search';
 import { getCurrentUser } from './user';
 
 const request = axios.create({
-    baseURL: 'http://103.124.95.125:1506/v1'
+    baseURL: 'http://103.124.95.125:1506/v1',
+    // baseURL: 'http://localhost:5000/v1',
 })
 
 request.interceptors.response.use(
