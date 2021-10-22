@@ -60,3 +60,7 @@ export const uploadImages = (files) => {
 export const getPlaceBySearch = (search) =>{
     return request.get('/places', {params: {search}})
 }
+
+export const getPlace = () => {
+    return request.get('/places',);
+}

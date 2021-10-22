@@ -19,7 +19,7 @@ export default function setting({ user }) {
   }
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar user={user}></NavBar>
       <section className="pt-20  bg-blueGray-50">
         <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-xanhlo border-0">

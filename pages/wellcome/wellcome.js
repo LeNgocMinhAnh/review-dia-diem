@@ -1,25 +1,33 @@
-import Head from 'next/head'
+import Head from "next/head";
 // import Link from 'next/link'
+import { getPlace } from "../../services/api";
 
-import router, { useRouter } from 'next/router'
+import router, { useRouter } from "next/router";
 
-
-import cat from '../wellcome/cat1.svg'
+import cat from "../wellcome/cat1.svg";
 import brgif from "../../components/xxx/brtest.jpg";
 
+export async function getServerSideProps(context) {
+  const { data } = await getPlace();
+  console.log("data");
+  return {
+    props: {
+      places: data.results,
+    },
+  };
+}
 
+export default function wellcome({ places }) {
+  const router = useRouter();
 
-export default function wellcome(){
-   const router = useRouter()
+  const ClickHome = (e) => {
+    e.prevenDefault();
+    router.push(href);
+  };
 
-    const ClickHome=(e) => {
-        e.prevenDefault()
-        router.push(href)
-    }
-    
-    return(
-        <>
-        <Head>
+  return (
+    <>
+      {/* <Head>
             <title>Welcome to Review</title>
         </Head>
             <div className="h-screen flex flex-col bg-bg5F939A justify-items-center place-items-center">
@@ -45,9 +53,56 @@ export default function wellcome(){
                 
                 
             </div>
+            */}
 
-
-
-        </>
-    )
-    }
+      <>
+        <div className="container">
+          <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+            <thead className="text-white">
+              {places.map((place, index) => (
+                <tr key={place.id} className="bg-purple-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                  <th className="p-3 text-left">Name</th>
+                  <th className="p-3 text-left">Email</th>
+                  <th className="p-3 text-left" width="110px">
+                    Actions
+                  </th>
+                </tr>
+              ))}
+            </thead>
+            <tbody className="flex-1 sm:flex-none">
+              {places.map((place, index) => (
+                <tr
+                  className="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 "
+                  key={place.id}
+                >
+                  <td className="border-grey-light border hover:bg-gray-100 p-3 ">
+                    <p className="line-clamp-1">
+                    {place.name}
+                    </p>
+                    
+                  </td>
+                  <td className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+                    {place.description?place.description :'chuwa cos'}
+                  </td>
+                  <td className="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+                    Delete
+                  </td>
+                </tr>
+              ))}
+              
+              
+              
+              
+            </tbody>
+          </table>
+        </div>
+        <style
+          dangerouslySetInnerHTML={{
+            __html:
+              "\n  html,\n  body {\n    height: 100%;\n  }\n\n  @media (min-width: 640px) {\n    table {\n      display: inline-table !important;\n    }\n\n    thead tr:not(:first-child) {\n      display: none;\n    }\n  }\n\n  td:not(:last-child) {\n    border-bottom: 0;\n  }\n\n  th:not(:last-child) {\n    border-bottom: 2px solid rgba(0, 0, 0, .1);\n  }\n",
+          }}
+        />
+      </>
+    </>
+  );
+}

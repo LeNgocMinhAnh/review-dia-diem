@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.2.2",
     "axios": "^0.21.1",
     "firebase": "^8.6.8",
     "firebase-admin": "^9.9.0",
