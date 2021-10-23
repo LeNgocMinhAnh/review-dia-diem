@@ -76,12 +76,12 @@ export default function wellcome({ places }) {
                   key={place.id}
                 >
                   <td className="border-grey-light border hover:bg-gray-100 p-3 ">
-                    <p className="line-clamp-1">
+                    <p className="line-clamp-2">
                     {place.name}
                     </p>
                     
                   </td>
-                  <td className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+                  <td className="border-grey-light border hover:bg-gray-100 p-3 line-clamp-2">
                     {place.description?place.description :'chuwa cos'}
                   </td>
                   <td className="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">

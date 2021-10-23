@@ -64,3 +64,7 @@ export const getPlaceBySearch = (search) =>{
 export const getPlace = () => {
     return request.get('/places',);
 }
+
+export const deletePlace = (id) => {
+    return request.delete('/places', { params: { id }, requireAuth: true });
+}
