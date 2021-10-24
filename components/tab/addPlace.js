@@ -1,9 +1,36 @@
-import { getPlace, deletePlace } from "../../services/api";
+import { getPlace, deletePlace, getPlaceBySearch } from "../../services/api";
 import PlaceForm from "../admin/place-form";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Swal from 'sweetalert2';
 
 export default function AddPlace({ total, places, setPlaces }) {
+
+  const [searchText, setSearchText] = useState('')
+  const timeoutID = useRef(null);
+  const [allPlace, setAllPlace] = useState(places)
+
+  const setSearchTextChange = useCallback((event) => {
+    setSearchText(event.target.value);
+  }, [])
+  const callSearch = useCallback(() => {
+    if (!searchText.length) {
+      if (timeoutID.current) {
+        clearTimeout(timeoutID.current);
+        timeoutID.current = null
+      }
+      setPlaces(allPlace);
+      return;
+    }
+    getPlaceBySearch(searchText).then(({ data }) => setPlaces(data.results));
+  }, [searchText])
+
+  useEffect(() => {
+    if (timeoutID.current) {
+      clearTimeout(timeoutID.current);
+      timeoutID.current = null;
+    }
+    timeoutID.current = setTimeout(callSearch, 100)
+  }, [searchText])
 
   const [isShowPlaceForm, setShowPlaceForm] = useState(false);
   const showOrHidePlaceForm = useCallback(() => {
@@ -18,23 +45,23 @@ export default function AddPlace({ total, places, setPlaces }) {
       icon: 'info',
       confirmButtonText: 'say yes',
       showCancelButton: true,
-      cancelButtonText:'huỷe',
-      
+      cancelButtonText: 'huỷe',
+
     }).then((result) => {
       if (result.isConfirmed) {
         deletePlace(place.id)
-        .then(() => {
-          setPlaces((prevState) => prevState.filter(item => item.id !== place.id))
-        })
+          .then(() => {
+            setPlaces((prevState) => prevState.filter(item => item.id !== place.id))
+          })
       }
     })
   }
 
-  
+
 
   return (
     <div className="bg-gray-50 flex-grow py-12 px-10 font-semibold ">
-      <h1>Places Layout</h1>
+      <h1 className="px-8 mb-2">Places Layout</h1>
       <nav className=" w-full flex relative justify-between items-center mx-auto px-8 h-16">
         {/* logo */}
         <div className="inline-flex">
@@ -42,7 +69,7 @@ export default function AddPlace({ total, places, setPlaces }) {
             <div className="">
               <div className="inline-block mr-2 mt-2">
                 <button
-                
+
                   onClick={showOrHidePlaceForm}
                   className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-purple-400 to-purple-600 transform hover:scale-110"
                 >
@@ -64,7 +91,7 @@ export default function AddPlace({ total, places, setPlaces }) {
                 </svg>
               </button>
             </div>
-            
+
           </div>
         </div>
         {/* end logo */}
@@ -84,6 +111,8 @@ export default function AddPlace({ total, places, setPlaces }) {
                 name="serch"
                 placeholder="Search"
                 className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+                value={searchText}
+                onChange={setSearchTextChange}
               />
               <button
                 type="submit"
