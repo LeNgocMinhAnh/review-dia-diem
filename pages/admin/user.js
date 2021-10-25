@@ -14,7 +14,7 @@ export default function UserManage({ user }) {
   const [searchText, setSearchText] = useState("");
 
   // debouncedValue sẽ thay đổi sau khi giá trị search text ngưng thay đổi sau 300ms
-  const debouncedValue = useDebounce(searchText, 1000);
+  const debouncedValue = useDebounce(searchText, 300);
 
   // Cái này sẽ được gọi khi user hoặc debouncedValue thay đổi
   // Vì debouncedValue thay đổi sau 300ms khi searchText thay đổi nên hàm này sẽ gọi sau 300ms

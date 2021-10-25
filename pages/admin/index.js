@@ -1,6 +1,7 @@
 import NavBar from "../../components/navbar/Navbar";
 import AddPlace from "../../components/tab/addPlace";
 import { getPlace } from "../../services/api";
+import { useDebounce } from "../../services/hooks";
 import PlaceForm from "../../components/admin/place-form";
 import Sidebar from "../../components/admin/side-bar";
 import { useEffect, useState } from "react";
@@ -9,16 +10,20 @@ export default function AdminIndex({ user }) {
   const [places, setPlaces] = useState([]);
   const [total, setTotal] = useState(0);
 
+  const [searchText, setSearchText] = useState("");
+  const debouncedValue = useDebounce(searchText, 300);
+
   useEffect(() => {
     if (!!user) {
-      getPlace().then(({ data, status }) => {
+      const data = { search: debouncedValue };
+      getPlace(data).then(({ data, status }) => {
         if (status === 200) {
           setPlaces(data.results);
           setTotal(data.total);
         }
       });
     }
-  }, [user]);
+  }, [user, debouncedValue]);
 
   if (user == undefined) {
     return null;
@@ -47,6 +52,8 @@ export default function AdminIndex({ user }) {
           total={total}
           places={places}
           setPlaces={setPlaces}
+          searchText={searchText}
+          setSearchText={setSearchText}
         ></AddPlace>
       </div>
     </>

@@ -61,8 +61,11 @@ export const getPlaceBySearch = (search) => {
   return request.get("/places", { params: { search } });
 };
 
-export const getPlace = () => {
-  return request.get("/places", { params: { limit: 100 } });
+export const getPlace = ({ search = "" }) => {
+  return request.get("/places", {
+    params: { search, limit: 100 },
+    requireAuth: true,
+  });
 };
 
 export const deletePlace = (id) => {

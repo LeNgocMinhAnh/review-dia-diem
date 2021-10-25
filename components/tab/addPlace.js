@@ -1,35 +1,20 @@
-import { getPlace, deletePlace, getPlaceBySearch } from "../../services/api";
+import { getPlace, deletePlace } from "../../services/api";
 import PlaceForm from "../admin/place-form";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Swal from "sweetalert2";
 
-export default function AddPlace({ total, places, setPlaces }) {
-  const [searchText, setSearchText] = useState("");
-  const timeoutID = useRef(null);
+export default function AddPlace({
+  total,
+  places,
+  setPlaces,
+  searchText,
+  setSearchText,
+}) {
   const [allPlace, setAllPlace] = useState(places);
 
   const setSearchTextChange = useCallback((event) => {
     setSearchText(event.target.value);
   }, []);
-  const callSearch = useCallback(() => {
-    if (!searchText.length) {
-      if (timeoutID.current) {
-        clearTimeout(timeoutID.current);
-        timeoutID.current = null;
-      }
-      setPlaces(allPlace);
-      return;
-    }
-    getPlaceBySearch(searchText).then(({ data }) => setPlaces(data.results));
-  }, [searchText]);
-
-  useEffect(() => {
-    if (timeoutID.current) {
-      clearTimeout(timeoutID.current);
-      timeoutID.current = null;
-    }
-    timeoutID.current = setTimeout(callSearch, 100);
-  }, [searchText]);
 
   const [isShowPlaceForm, setShowPlaceForm] = useState(false);
   const showOrHidePlaceForm = useCallback(() => {
