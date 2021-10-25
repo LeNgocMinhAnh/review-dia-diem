@@ -27,7 +27,8 @@ export default function PlaceForm({ visible, showOrHidePlaceForm }) {
     const { status } = await addPlace(data);
     if (status === 201) {
       console.log(status);
-      window.location.reload();
+      toast.info("Thêm địa điểm thành công");
+      showOrHidePlaceForm();
     } else {
       toast.error("Lỗi");
     }
@@ -41,7 +42,7 @@ export default function PlaceForm({ visible, showOrHidePlaceForm }) {
           : "hidden"
       }
     >
-      <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
+      <div className="flex flex-col w-11/12 max-w-2xl mx-auto border border-gray-300 rounded-lg shadow-xl sm:w-5/6 lg:w-1/2">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
           <p className="font-semibold text-gray-800">Thêm địa điểm</p>
           <svg
@@ -77,17 +78,17 @@ export default function PlaceForm({ visible, showOrHidePlaceForm }) {
             type="text"
             name
             placeholder="Mô tả..."
-            className="p-3 mt-5 bg-white border border-gray-200 rounded shadow-sm h-24"
+            className="h-24 p-3 mt-5 bg-white border border-gray-200 rounded shadow-sm"
             id
             value={description}
             onChange={(e) => setdescription(e.target.value)}
           />
-          <div className="flex flex-col sm:flex-row items-center mb-5 sm:space-x-5"></div>
+          <div className="flex flex-col items-center mb-5 sm:flex-row sm:space-x-5"></div>
           <p className="mb-2 font-semibold text-gray-700">Địa chỉ</p>
           <input
             type="text"
             name
-            className="w-full p-2 bg-white border border-gray-200 rounded shadow-sm appearance-none mb-2"
+            className="w-full p-2 mb-2 bg-white border border-gray-200 rounded shadow-sm appearance-none"
             placeholder="Nhập địa chỉ..."
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -122,7 +123,7 @@ export default function PlaceForm({ visible, showOrHidePlaceForm }) {
           <p className="font-semibold text-gray-600">Cancel</p>
           <button
             onClick={submitPlace}
-            className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
+            className="px-4 py-2 font-semibold text-white bg-blue-500 rounded"
           >
             Save
           </button>

@@ -1,86 +1,85 @@
 import { getPlace, deletePlace, getPlaceBySearch } from "../../services/api";
 import PlaceForm from "../admin/place-form";
 import { useEffect, useState, useCallback, useRef } from "react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default function AddPlace({ total, places, setPlaces }) {
-
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("");
   const timeoutID = useRef(null);
-  const [allPlace, setAllPlace] = useState(places)
+  const [allPlace, setAllPlace] = useState(places);
 
   const setSearchTextChange = useCallback((event) => {
     setSearchText(event.target.value);
-  }, [])
+  }, []);
   const callSearch = useCallback(() => {
     if (!searchText.length) {
       if (timeoutID.current) {
         clearTimeout(timeoutID.current);
-        timeoutID.current = null
+        timeoutID.current = null;
       }
       setPlaces(allPlace);
       return;
     }
     getPlaceBySearch(searchText).then(({ data }) => setPlaces(data.results));
-  }, [searchText])
+  }, [searchText]);
 
   useEffect(() => {
     if (timeoutID.current) {
       clearTimeout(timeoutID.current);
       timeoutID.current = null;
     }
-    timeoutID.current = setTimeout(callSearch, 100)
-  }, [searchText])
+    timeoutID.current = setTimeout(callSearch, 100);
+  }, [searchText]);
 
   const [isShowPlaceForm, setShowPlaceForm] = useState(false);
   const showOrHidePlaceForm = useCallback(() => {
-    setShowPlaceForm(prevState => !prevState);
+    setShowPlaceForm((prevState) => !prevState);
   }, []);
 
   const onClickDeletePlace = (place) => {
-    console.log(place)
+    console.log(place);
     Swal.fire({
-      title: 'Xóa địa điểm!',
+      title: "Xóa địa điểm!",
       text: `Bạn có muốn xóa ${place.name} khum`,
-      icon: 'info',
-      confirmButtonText: 'say yes',
+      icon: "info",
+      confirmButtonText: "say yes",
       showCancelButton: true,
-      cancelButtonText: 'huỷe',
-
+      cancelButtonText: "huỷe",
     }).then((result) => {
       if (result.isConfirmed) {
-        deletePlace(place.id)
-          .then(() => {
-            setPlaces((prevState) => prevState.filter(item => item.id !== place.id))
-          })
+        deletePlace(place.id).then(() => {
+          setPlaces((prevState) =>
+            prevState.filter((item) => item.id !== place.id)
+          );
+        });
       }
-    })
-  }
-
-
+    });
+  };
 
   return (
-    <div className="bg-gray-50 flex-grow py-12 px-10 font-semibold ">
+    <div className="flex-grow px-10 py-12 font-semibold bg-gray-50 md:ml-72">
       <h1 className="px-8 mb-2">Places Layout</h1>
-      <nav className=" w-full flex relative justify-between items-center mx-auto px-8 h-16">
+      <nav className="relative flex items-center justify-between w-full h-16 px-8 mx-auto ">
         {/* logo */}
         <div className="inline-flex">
           <div className="">
             <div className="">
-              <div className="inline-block mr-2 mt-2">
+              <div className="inline-block mt-2 mr-2">
                 <button
-
                   onClick={showOrHidePlaceForm}
                   className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-purple-400 to-purple-600 transform hover:scale-110"
                 >
                   Thêm địa điểm
                 </button>
               </div>
-              <button onClick={showOrHidePlaceForm} className="p-0 w-10 h-10 bg-white rounded-lg hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
+              <button
+                onClick={showOrHidePlaceForm}
+                className="w-10 h-10 p-0 transition duration-200 ease-in bg-white rounded-lg shadow hover:bg-red-700 active:shadow-lg mouse focus:outline-none"
+              >
                 <svg
                   viewBox="0 0 20 20"
                   enableBackground="new 0 0 20 20"
-                  className="w-6 h-6 inline-block"
+                  className="inline-block w-6 h-6"
                 >
                   <path
                     fill="#999999"
@@ -91,13 +90,12 @@ export default function AddPlace({ total, places, setPlaces }) {
                 </svg>
               </button>
             </div>
-
           </div>
         </div>
         {/* end logo */}
         {/* search bar */}
-        <div className="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
-          <div className="inline-block text-gray-100	">
+        <div className="justify-start flex-grow-0 flex-shrink hidden px-2 sm:block">
+          <div className="inline-block text-gray-100 ">
             Showing 1 to 10 of {total} place
           </div>
         </div>
@@ -110,16 +108,16 @@ export default function AddPlace({ total, places, setPlaces }) {
                 type="search"
                 name="serch"
                 placeholder="Search"
-                className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+                className="h-10 px-5 pr-10 text-sm bg-white rounded-full focus:outline-none"
                 value={searchText}
                 onChange={setSearchTextChange}
               />
               <button
                 type="submit"
-                className="absolute right-0 top-0 mt-3 mr-4"
+                className="absolute top-0 right-0 mt-3 mr-4"
               >
                 <svg
-                  className="h-4 w-4 fill-current"
+                  className="w-4 h-4 fill-current"
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
                   version="1.1"
@@ -141,15 +139,15 @@ export default function AddPlace({ total, places, setPlaces }) {
         {/* end login */}
       </nav>
 
-      <section className="container mx-auto p-6 font-mono">
+      <section className="container p-6 mx-auto font-mono">
         <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
           <div className="w-full overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
-                <tr className="text-md font-medium tracking-wide table-row text-left text-gray-500 uppercase bg-gray-100 uppercase border-b border-gray-600">
-                  <th className="px-4 py-3 w-1/4 ">Name</th>
+                <tr className="table-row font-medium tracking-wide text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-600 text-md">
+                  <th className="w-1/4 px-4 py-3 ">Name</th>
                   <th className="px-4 py-3">Age</th>
-                  <th className="px-4 py-3 w-1/5">Status</th>
+                  <th className="w-1/5 px-4 py-3">Status</th>
                   <th className="px-4 py-3 text-center">Actions</th>
                 </tr>
               </thead>
@@ -163,13 +161,13 @@ export default function AddPlace({ total, places, setPlaces }) {
                       <div className="flex items-center text-sm">
                         <div className="relative w-8 h-8 mr-3 rounded-full md:block"></div>
                         <div>
-                          <p className="font-semibold   text-gray-100">
+                          <p className="font-semibold text-gray-100">
                             {place.name}
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3  text-ms font-semibold ">
+                    <td className="px-4 py-3 font-semibold text-ms ">
                       <p className="line-clamp-2">{place.description}</p>
                     </td>
                     <td className="px-4 py-3 text-xs ">
@@ -180,7 +178,7 @@ export default function AddPlace({ total, places, setPlaces }) {
                     </td>
 
                     <td className="px-4 py-3 text-xs ">
-                      <div className="flex item-center justify-center">
+                      <div className="flex justify-center item-center">
                         <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +215,10 @@ export default function AddPlace({ total, places, setPlaces }) {
                             />
                           </svg>
                         </div>
-                        <div onClick={() => onClickDeletePlace(place)} className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                        <div
+                          onClick={() => onClickDeletePlace(place)}
+                          className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

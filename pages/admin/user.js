@@ -1,20 +1,22 @@
-import NavBar from "../../components/navbar/Navbar";
-import AddPlace from "../../components/tab/addPlace";
-import { getPlace } from "../../services/api";
-import PlaceForm from "../../components/admin/place-form";
-import Sidebar from "../../components/admin/side-bar";
 import { useEffect, useState } from "react";
+import { getUser } from "../../services/api";
 
-export default function AdminIndex({ user }) {
-  const [places, setPlaces] = useState([]);
+import Sidebar from "../../components/admin/side-bar";
+import Navbar from "../../components/navbar/Navbar";
+import AddUser from "../../components/tab/add-user";
+
+export default function UserManage({ user }) {
+  const [users, setUsers] = useState([]);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    if (!!user) {
-      getPlace().then(({ data, status }) => {
+    if (user) {
+      getUser().then(({ data, status }) => {
         if (status === 200) {
-          setPlaces(data.results);
+          setUsers(data.results);
           setTotal(data.total);
+        } else {
+          console.log("loi");
         }
       });
     }
@@ -36,18 +38,12 @@ export default function AdminIndex({ user }) {
   }
   return (
     <>
-      <NavBar user={user}></NavBar>
+      <Navbar user={user}></Navbar>
       <div className="flex flex-row pt-20 bg-gray-50 ">
         {/**Sidebar */}
         <Sidebar></Sidebar>
-
+        <AddUser users={users} total={total}></AddUser>
         {/**Content */}
-
-        <AddPlace
-          total={total}
-          places={places}
-          setPlaces={setPlaces}
-        ></AddPlace>
       </div>
     </>
   );

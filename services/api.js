@@ -19,6 +19,7 @@ request.interceptors.response.use(
 request.interceptors.request.use(async (config) => {
   if (config.requireAuth) {
     const user = getCurrentUser();
+
     if (user) {
       const token = await user.getIdToken();
       config.headers.authorization = `Bearer ${token}`;
@@ -70,4 +71,8 @@ export const deletePlace = (id) => {
 
 export const addPlace = (data) => {
   return request.post("/places", data, { requireAuth: true });
+};
+
+export const getUser = () => {
+  return request.get("/user/list", { requireAuth: true });
 };
