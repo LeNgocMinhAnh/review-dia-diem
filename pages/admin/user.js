@@ -4,23 +4,40 @@ import { getUser } from "../../services/api";
 import Sidebar from "../../components/admin/side-bar";
 import Navbar from "../../components/navbar/Navbar";
 import AddUser from "../../components/tab/add-user";
+import { useDebounce } from "../../services/hooks";
 
 export default function UserManage({ user }) {
   const [users, setUsers] = useState([]);
   const [total, setTotal] = useState(0);
 
+  // Search text phải nằm bên này
+  const [searchText, setSearchText] = useState("");
+
+  // debouncedValue sẽ thay đổi sau khi giá trị search text ngưng thay đổi sau 300ms
+  const debouncedValue = useDebounce(searchText, 1000);
+
+  // Cái này sẽ được gọi khi user hoặc debouncedValue thay đổi
+  // Vì debouncedValue thay đổi sau 300ms khi searchText thay đổi nên hàm này sẽ gọi sau 300ms
   useEffect(() => {
+    // Nếu đã đăng nhập
     if (user) {
-      getUser().then(({ data, status }) => {
+      const data = { search: debouncedValue };
+      console.log("Call api", data);
+      getUser(data).then(({ data, status }) => {
         if (status === 200) {
           setUsers(data.results);
           setTotal(data.total);
         } else {
+          // todo: toast lỗi
           console.log("loi");
         }
       });
     }
-  }, [user]);
+  }, [user, debouncedValue]);
+
+  useEffect(() => {
+    console.log("searchText", searchText, "debouncedValue", debouncedValue);
+  }, [searchText, debouncedValue]);
 
   if (user == undefined) {
     return null;
@@ -42,7 +59,14 @@ export default function UserManage({ user }) {
       <div className="flex flex-row pt-20 bg-gray-50 ">
         {/**Sidebar */}
         <Sidebar></Sidebar>
-        <AddUser users={users} total={total}></AddUser>
+        <AddUser
+          user={user}
+          users={users}
+          total={total}
+          searchText={searchText}
+          setSearchText={setSearchText}
+          setUsers={setUsers}
+        ></AddUser>
         {/**Content */}
       </div>
     </>

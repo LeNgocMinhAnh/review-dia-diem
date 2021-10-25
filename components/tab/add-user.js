@@ -1,7 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { formatDate } from "../../services/time";
+import { getUserBySearch } from "../../services/api";
 
-export default function AddUser({ users, total }) {
-  console.log(users);
+export default function AddUser({
+  users,
+  total,
+  setUsers,
+  searchText,
+  setSearchText,
+}) {
+  const setSearchTextChange = useCallback((event) => {
+    setSearchText(event.target.value);
+  }, []);
+
   return (
     <div className="flex-grow px-10 py-12 font-semibold bg-gray-50 md:ml-72">
       <h1 className="px-8 mb-2">Users Layout</h1>
@@ -49,6 +60,8 @@ export default function AddUser({ users, total }) {
                 name="serch"
                 placeholder="Search"
                 className="h-10 px-5 pr-10 text-sm bg-white rounded-full focus:outline-none"
+                value={searchText}
+                onChange={setSearchTextChange}
               />
               <button
                 type="submit"
@@ -101,42 +114,49 @@ export default function AddUser({ users, total }) {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
               {users.map((user, index) => (
-                <tr>
-                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
+                <tr
+                  key={user.id}
+                  className="text-gray-700 hover:bg-gray-100 hover:shadow-lg"
+                >
+                  <td className="px-5 py-5 text-sm ">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 w-10 h-10">
                         <img
-                          class="w-full h-full rounded-full"
+                          className="w-full h-full rounded-full"
                           src={user.displayImage}
                           alt=""
                         />
                       </div>
-                      <div class="ml-3">
-                        <div class="">{user.displayName}</div>
-                        <div class="text-gray-500">{user.email}</div>
+                      <div className="ml-3">
+                        <div className="">{user.displayName}</div>
+                        <div className="text-gray-500">{user.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <td className="px-5 py-5 text-sm ">
                     {user.roles.map((role, index) => (
-                      <p class="text-gray-900 whitespace-no-wrap p-1">{role}</p>
+                      <p className="p-1 text-gray-900 whitespace-no-wrap">
+                        {role}
+                      </p>
                     ))}
                   </td>
-                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p class="text-gray-900 whitespace-no-wrap">{}</p>
+                  <td className="px-5 py-5 text-sm ">
+                    <p className="text-gray-900 whitespace-no-wrap">
+                      {formatDate(user.createdAt)}
+                    </p>
                   </td>
-                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                  <td className="px-5 py-5 text-sm ">
+                    <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                       <span
                         aria-hidden
-                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                        className="absolute inset-0 bg-green-200 rounded-full opacity-50"
                       ></span>
-                      <span class="relative">Activo</span>
+                      <span className="relative">Activo</span>
                     </span>
                   </td>
-                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <td className="px-5 py-5 ">
                     <div className="flex ">
                       <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                         <svg

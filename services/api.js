@@ -73,6 +73,6 @@ export const addPlace = (data) => {
   return request.post("/places", data, { requireAuth: true });
 };
 
-export const getUser = () => {
-  return request.get("/user/list", { requireAuth: true });
+export const getUser = ({ search = "" }) => {
+  return request.get("/user/list", { params: { search }, requireAuth: true });
 };
