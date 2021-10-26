@@ -1,12 +1,12 @@
 export default function Sidebar() {
   return (
-    <div className="h-full  md:flex hidden md:visible w-72 bg-xanhlo  fixed">
+    <div className="fixed hidden h-full transition-all duration-300 ease-in-out md:flex md:visible w-72 bg-xanhlo">
       <div className="py-8 pl-10 ">
-        <div className="flex items-center space-x-4 mr-10  p-2 bg-indigo-600 rounded-md">
+        <div className="flex items-center p-2 mr-10 space-x-4 bg-indigo-600 rounded-md">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-white"
+              className="w-8 h-8 text-white"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -26,7 +26,7 @@ export default function Sidebar() {
             </svg>
           </div>
           <div>
-            <p className="text-lg text-white font-semibold">Dashboard</p>
+            <p className="text-lg font-semibold text-white">Dashboard</p>
           </div>
         </div>
         <div className="mt-8 ">
@@ -34,11 +34,11 @@ export default function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center  p-3 text-sm font-semibold text-gray-500 bg-xanhlo  transition duration-200"
+                className="flex items-center p-3 text-sm font-semibold text-gray-500 transition duration-200 bg-xanhlo"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-gray-400 hover:text-indigo-600 transition duration-200"
+                  className="w-6 h-6 mr-4 text-gray-400 transition duration-200 hover:text-indigo-600"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -50,11 +50,11 @@ export default function Sidebar() {
             <li className="">
               <a
                 href="#"
-                className="flex items-center text-sm p-3 font-semibold text-gray-500   transition duration-200"
+                className="flex items-center p-3 text-sm font-semibold text-gray-500 transition duration-200"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-gray-400 hover:text-indigo-600 transition duration-200"
+                  className="w-6 h-6 mr-4 text-gray-400 transition duration-200 hover:text-indigo-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -72,11 +72,11 @@ export default function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center text-sm p-3 font-semibold text-gray-500  transition duration-200"
+                className="flex items-center p-3 text-sm font-semibold text-gray-500 transition duration-200"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-gray-400 hover:text-indigo-600 transition duration-200"
+                  className="w-6 h-6 mr-4 text-gray-400 transition duration-200 hover:text-indigo-600"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -92,11 +92,11 @@ export default function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center text-sm p-3 font-semibold text-gray-500 hover:text-indigo-600 transition duration-200"
+                className="flex items-center p-3 text-sm font-semibold text-gray-500 transition duration-200 hover:text-indigo-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-gray-400 hover:text-indigo-600 transition duration-200"
+                  className="w-6 h-6 mr-4 text-gray-400 transition duration-200 hover:text-indigo-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -114,11 +114,11 @@ export default function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-centerx text-sm p-3 font-semibold text-gray-500 hover:text-indigo-600 transition duration-200"
+                className="flex p-3 text-sm font-semibold text-gray-500 transition duration-200 items-centerx hover:text-indigo-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-gray-400 hover:text-indigo-600 transition duration-200"
+                  className="w-6 h-6 mr-4 text-gray-400 transition duration-200 hover:text-indigo-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -136,11 +136,11 @@ export default function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center text-sm p-3 font-semibold text-gray-500 hover:text-indigo-600 transition duration-200"
+                className="flex items-center p-3 text-sm font-semibold text-gray-500 transition duration-200 hover:text-indigo-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-gray-400 hover:text-indigo-600 transition duration-200"
+                  className="w-6 h-6 mr-4 text-gray-400 transition duration-200 hover:text-indigo-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -163,11 +163,11 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
-        <div className="flex mt-20 space-x-4 items-center">
+        <div className="flex items-center mt-20 space-x-4">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-gray-400 hover:text-indigo-600 transition duration-200"
+              className="w-6 h-6 text-gray-400 transition duration-200 hover:text-indigo-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -182,7 +182,7 @@ export default function Sidebar() {
           </div>
           <a
             href="#"
-            className="block font-semibold text-gray-500 hover:text-indigo-600 transition duration-200"
+            className="block font-semibold text-gray-500 transition duration-200 hover:text-indigo-600"
           >
             Logout
           </a>

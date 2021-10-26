@@ -79,3 +79,7 @@ export const addPlace = (data) => {
 export const getUser = ({ search = "" }) => {
   return request.get("/user/list", { params: { search }, requireAuth: true });
 };
+
+export const getReport = () => {
+  return request.get("/reports");
+};
