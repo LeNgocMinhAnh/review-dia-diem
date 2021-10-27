@@ -10,7 +10,7 @@ import { CgPlayListAdd } from "react-icons/cg";
 import { route } from "next/dist/next-server/server/router";
 // import router, { useRouter } from 'next/router'
 
-export default function Navbar({ user, signout }) {
+export default function NavbarAdmin({ user, signout }) {
   return (
     <>
       <div
@@ -18,6 +18,22 @@ export default function Navbar({ user, signout }) {
       >
         <div className="container flex items-center justify-between h-20 px-4 mx-auto md:px-0">
           <div className="flex flex-row items-center justify-between ">
+            <button className="px-1 text-gray-500 focus:outline-none md:hidden">
+              <svg
+                className="w-8 h-8 "
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 6H20M4 12H20M4 18H11"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
             <Link href="/">
               <div className="cursor-pointer">
                 <img src={woman} className="h-20 p-2 "></img>

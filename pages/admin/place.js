@@ -1,4 +1,4 @@
-import NavBar from "../../components/navbar/Navbar";
+import NavbarAdmin from "../../components/navbar/nav-admin";
 import AddPlace from "../../components/tab/addPlace";
 import { getPlace } from "../../services/api";
 import { useDebounce } from "../../services/hooks";
@@ -41,7 +41,7 @@ export default function PlaceManage({ user }) {
   }
   return (
     <>
-      <NavBar user={user}></NavBar>
+      <NavbarAdmin user={user}></NavbarAdmin>
       <div className="flex flex-row pt-20 bg-gray-50 ">
         {/**Sidebar */}
         <Sidebar></Sidebar>

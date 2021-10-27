@@ -1,4 +1,4 @@
-import NavBar from "../../components/navbar/Navbar";
+import NavbarAdmin from "../../components/navbar/nav-admin";
 import AddPlace from "../../components/tab/addPlace";
 import { getPlace } from "../../services/api";
 import { useDebounce } from "../../services/hooks";
@@ -10,7 +10,7 @@ import Dasboard from "../../components/tab/dasboard";
 export default function AdminIndex({ user }) {
   return (
     <>
-      <NavBar user={user}></NavBar>
+      <NavbarAdmin user={user}></NavbarAdmin>
       <div className="flex flex-row pt-20 bg-gray-50">
         <Sidebar></Sidebar>
         <Dasboard user={user}></Dasboard>

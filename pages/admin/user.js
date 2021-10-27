@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getUser } from "../../services/api";
 
 import Sidebar from "../../components/admin/side-bar";
-import Navbar from "../../components/navbar/Navbar";
+import NavbarAdmin from "../../components/navbar/nav-admin";
 import AddUser from "../../components/tab/add-user";
 import { useDebounce } from "../../services/hooks";
 
@@ -55,7 +55,7 @@ export default function UserManage({ user }) {
   }
   return (
     <>
-      <Navbar user={user}></Navbar>
+      <NavbarAdmin user={user}></NavbarAdmin>
       <div className="flex flex-row pt-20 bg-gray-50 ">
         {/**Sidebar */}
         <Sidebar></Sidebar>

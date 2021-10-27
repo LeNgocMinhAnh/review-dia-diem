@@ -15,10 +15,10 @@ export default function Dasboard({ user }) {
     }
   });
   return (
-    <div className="flex-grow h-screen px-10 py-12 md:ml-72 ">
-      <div className="flex justify-between">
+    <div className="flex-grow h-screen py-5 -10 md:ml-72 ">
+      <div className="flex justify-center">
         <div>
-          <h1 className="text-4xl font-bold text-indigo-100 mt-">
+          <h1 className="text-4xl font-bold text-center text-indigo-100 mt-">
             Welcome to Venus!
           </h1>
         </div>
@@ -35,7 +35,7 @@ export default function Dasboard({ user }) {
                   {report.users}
                 </h1>
               </div>
-              <div>
+              <div className="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-8 w-8 text-indigo-600"
