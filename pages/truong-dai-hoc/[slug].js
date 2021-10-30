@@ -9,13 +9,12 @@ import SummaryStar from "../../components/dia-diem/summary-star";
 import Map from "../../components/map";
 
 import Review from "../../components/review";
-import NavBar from '../../components/navbar/Navbar'
+import NavBar from "../../components/navbar/Navbar";
 
-import {FiMapPin} from "react-icons/fi"
+import { FiMapPin } from "react-icons/fi";
 
-import brtest from  "../../components/xxx/brtest.jpg";
-import br from "../truong-dai-hoc/banner.jpg"
-
+import brtest from "../../components/xxx/brtest.jpg";
+import br from "../truong-dai-hoc/banner.jpg";
 
 export async function getServerSideProps(context) {
   const { status, data = null } = await getPlaceBySlug(context.query.slug);
@@ -41,7 +40,7 @@ export default function Place({ place, user }) {
     setShowRatingForm(false);
   }, []);
   const showRatingShow = useCallback(() => {
-    console.log('huhuhu')
+    console.log("huhuhu");
     if (!user) {
       return router.push(
         `/user/login?redirect_uri=${router.asPath}?action=review`
@@ -57,41 +56,47 @@ export default function Place({ place, user }) {
   }, [router.query, user]);
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <Head>
         <title>{place.name}</title>
       </Head>
-   <NavBar user={user} ></NavBar>
-      <div className='h-full w-full pt-20 bg-xanhlo  ' style={{backgroundImage: 'url("")'}}>
-        <div className=' container mx-auto grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-y-4 md:gap-x-4 pb-24 md:mt-5 p-2'>
-          <div className='col-span-3'>
-          <h1 className=" text-2xl font-medium mb-2 ">{place.name}</h1>
-          <div className="flex items-center ">
-          <StarRatings
-                          rating={place.star}
-                          starRatedColor="#ffbf00"
-                          numberOfStars={5}
-                          starDimension="20px"
-                          name="rating"
-                          starSpacing	="2px"
-                        />
-                        <div className="ml-2 font-medium items-center">({place.star.toFixed(1)})</div>
+      <NavBar user={user}></NavBar>
+      <div
+        className="h-full w-full pt-20 bg-xanhlo  "
+        style={{ backgroundImage: 'url("")' }}
+      >
+        <div className=" container mx-auto grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-y-4 md:gap-x-4 pb-24 md:mt-5 p-2">
+          <div className="col-span-3">
+            <h1 className=" text-2xl font-medium mb-2 ">{place.name}</h1>
+            <div className="flex items-center ">
+              <StarRatings
+                rating={place.star}
+                starRatedColor="#ffbf00"
+                numberOfStars={5}
+                starDimension="20px"
+                name="rating"
+                starSpacing="2px"
+              />
+              <div className="ml-2 font-medium items-center">
+                ({place.star.toFixed(1)})
+              </div>
+            </div>
+            <p className="flex mt-3 mb-3 inline-block text-sm items-center ">
+              <FiMapPin></FiMapPin>
+              {place.address}
+            </p>
+
+            <div className="  ">{place.description} </div>
           </div>
-          <p className="flex mt-3 mb-3 inline-block text-sm items-center ">
-          <FiMapPin></FiMapPin>
-          {place.address}
-          </p>
-          
-                       
-                        <div className="  ">{place.description} </div>
-          </div>
-          <div className='col-span-2 '>
-          <Map height='326px'  name={place.name} coordinates={[...place.location.coordinates].reverse().join(",")}></Map>
+          <div className="col-span-2 ">
+            <Map
+              height="326px"
+              name={place.name}
+              coordinates={[...place.location.coordinates].reverse().join(",")}
+            ></Map>
           </div>
         </div>
-          
       </div>
-
 
       <div className="container mx-auto mb-8 -mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-y-4 lg:gap-x-4">
@@ -105,7 +110,11 @@ export default function Place({ place, user }) {
 
           {/* RIGHT COLUMN */}
           <div className="col-span-1">
-            <SummaryStar showRatingShow={showRatingShow} name={place.name} slug={place.slug} />
+            <SummaryStar
+              showRatingShow={showRatingShow}
+              name={place.name}
+              slug={place.slug}
+            />
           </div>
           {/* END RIGHT COLUMN */}
         </div>
@@ -117,55 +126,49 @@ export default function Place({ place, user }) {
         place={place}
       ></ReviewForm>
 
-
-<footer class="footer bg-xanh31c2b8 relative pt-1 border-b-2 border-blue-700 flex py-16 my-24">
-          <div class="container mx-auto px-6">
-            <div class="sm:flex sm:mt-8">
-              <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
-                <div class="flex flex-col font-BlinkMacSystemFont text-GhostWhite text-lg ">
-                  <span class="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">
-                    REVIEW CÔNG TY
-                  </span>
-                  <span class="my-2">
-                    <a
-                      href="#"
-                      class="text-blue-700 text-md hover:text-blue-500"
-                    >
-                      Giải đáp thắc mắc - Yêu cầu xoá riview
-                    </a>
-                  </span>
-                  <span class="my-2">
-                    <a
-                      href="#"
-                      class="text-blue-700  text-md hover:text-blue-500"
-                    >
-                      Yêu cầu thêm công ty
-                    </a>
-                  </span>
-                  <span class="my-2">
-                    <a
-                      href="#"
-                      class="text-blue-700 text-md hover:text-blue-500"
-                    >
-                      Điều khoản sử dụng
-                    </a>
-                  </span>
-                </div>
+      <footer className="footer bg-xanh31c2b8 relative pt-1 border-b-2 border-blue-700 flex py-16 my-24">
+        <div className="container mx-auto px-6">
+          <div className="sm:flex sm:mt-8">
+            <div className="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
+              <div className="flex flex-col font-BlinkMacSystemFont text-GhostWhite text-lg ">
+                <span className="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">
+                  REVIEW CÔNG TY
+                </span>
+                <span className="my-2">
+                  <a
+                    href="#"
+                    className="text-blue-700 text-md hover:text-blue-500"
+                  >
+                    Giải đáp thắc mắc - Yêu cầu xoá riview
+                  </a>
+                </span>
+                <span className="my-2">
+                  <a
+                    href="#"
+                    className="text-blue-700  text-md hover:text-blue-500"
+                  >
+                    Yêu cầu thêm công ty
+                  </a>
+                </span>
+                <span className="my-2">
+                  <a
+                    href="#"
+                    className="text-blue-700 text-md hover:text-blue-500"
+                  >
+                    Điều khoản sử dụng
+                  </a>
+                </span>
               </div>
             </div>
           </div>
-        </footer>
-
-
-
+        </div>
+      </footer>
     </div>
-
-
-    
   );
 }
 
-        {/*<div className=" bg-black">
+{
+  /*<div className=" bg-black">
           <header className="text-gray-100 bg-FFE1FF body-font shadow w-full">
             <div className="container mx-auto flex flex-wrap p-2 flex-col md:flex-row items-center">
               <img
@@ -202,4 +205,5 @@ export default function Place({ place, user }) {
   </div>
             </div>
           </header>
-        </div>*/}
+        </div>*/
+}

@@ -39,10 +39,10 @@ export default function Navbar({ user, signout }) {
 
 const DropDown = ({ logout, setting }) => {
   return (
-    <div class="absolute  w-40 mt-2 py-2 px-1.5  bg-FDF5E6  rounded shadow-xl">
+    <div className="absolute  w-40 mt-2 py-2 px-1.5  bg-FDF5E6  rounded shadow-xl">
       <a
         href="#"
-        class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        className="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
         onClick={setting}
       >
         <div className="mr-3">
@@ -69,12 +69,12 @@ const DropDown = ({ logout, setting }) => {
         </div>
         Setting
       </a>
-      <div class="py-2">
+      <div className="py-2">
         <hr className="dark:border-gray-700" />
       </div>
       <a
         href="#"
-        class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        className="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
         onClick={logout}
       >
         <div className="mr-3 text-red-600">

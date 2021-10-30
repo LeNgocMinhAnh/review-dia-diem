@@ -10,7 +10,7 @@ import { CgPlayListAdd } from "react-icons/cg";
 import { route } from "next/dist/next-server/server/router";
 // import router, { useRouter } from 'next/router'
 
-export default function NavbarAdmin({ user, signout }) {
+export default function NavbarAdmin({ user, signout, toggleSidebar }) {
   return (
     <>
       <div
@@ -18,9 +18,12 @@ export default function NavbarAdmin({ user, signout }) {
       >
         <div className="container flex items-center justify-between h-20 px-4 mx-auto md:px-0">
           <div className="flex flex-row items-center justify-between ">
-            <button className="px-1 text-gray-500 focus:outline-none md:hidden">
+            <button
+              onClick={toggleSidebar}
+              className="p-2 text-gray-500 focus:outline-none md:hidden"
+            >
               <svg
-                className="w-8 h-8 "
+                className="w-10 h-10 "
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -55,10 +58,10 @@ export default function NavbarAdmin({ user, signout }) {
 
 const DropDown = ({ logout, setting }) => {
   return (
-    <div class="absolute  w-40 mt-2 py-2 px-1.5  bg-FDF5E6  rounded shadow-xl">
+    <div className="absolute  w-40 mt-2 py-2 px-1.5  bg-FDF5E6  rounded shadow-xl">
       <a
         href="#"
-        class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        className="flex items-center transition-colors duration-200 transform border-r-4 border-transparent hover:border-red-600"
         onClick={setting}
       >
         <div className="mr-3">
@@ -85,12 +88,12 @@ const DropDown = ({ logout, setting }) => {
         </div>
         Setting
       </a>
-      <div class="py-2">
+      <div className="py-2">
         <hr className="dark:border-gray-700" />
       </div>
       <a
         href="#"
-        class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        className="flex items-center transition-colors duration-200 transform border-r-4 border-transparent hover:border-red-600"
         onClick={logout}
       >
         <div className="mr-3 text-red-600">

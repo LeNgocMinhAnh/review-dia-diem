@@ -1,12 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getUser } from "../../services/api";
+import SidebarMobile from "../../components/admin/sidebar-mobile";
 
-import Sidebar from "../../components/admin/side-bar";
+import Sidebar from "../../components/admin/sidebar";
 import NavbarAdmin from "../../components/navbar/nav-admin";
 import AddUser from "../../components/tab/add-user";
 import { useDebounce } from "../../services/hooks";
 
 export default function UserManage({ user }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = useCallback(
+    () => setSidebarOpen((prevState) => !prevState),
+    []
+  );
+
   const [users, setUsers] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -55,10 +63,10 @@ export default function UserManage({ user }) {
   }
   return (
     <>
-      <NavbarAdmin user={user}></NavbarAdmin>
+      <NavbarAdmin user={user} toggleSidebar={toggleSidebar}></NavbarAdmin>
       <div className="flex flex-row pt-20 bg-gray-50 ">
         {/**Sidebar */}
-        <Sidebar></Sidebar>
+        <SidebarMobile sidebarOpen={sidebarOpen}></SidebarMobile>
         <AddUser
           user={user}
           users={users}

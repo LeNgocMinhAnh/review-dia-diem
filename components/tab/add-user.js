@@ -21,11 +21,7 @@ export default function AddUser({
         <div className="inline-flex">
           <div className="">
             <div className="">
-              <div className="inline-block mt-2 mr-2">
-                <button className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-purple-400 to-purple-600 transform hover:scale-110 hidden md:block">
-                  Thêm địa điểm
-                </button>
-              </div>
+              <div className="inline-block mt-2 mr-2"></div>
               <button className="w-10 h-10 p-0 transition duration-200 ease-in bg-white rounded-lg shadow hover:bg-red-700 active:shadow-lg mouse focus:outline-none">
                 <svg
                   viewBox="0 0 20 20"

@@ -1,6 +1,6 @@
-export default function Sidebar({ sidebarOpen }) {
+export default function Sidebar({}) {
   return (
-    <div className="h-full transition-all duration-300 ease-in-out md:visible w-72 bg-xanhlo">
+    <div className="fixed z-20 hidden h-full transition-all duration-300 ease-in-out shadow-lg w-72 md:block bg-xanhlo">
       <div className="py-8 pl-10 ">
         <div className="flex items-center p-2 mr-10 space-x-4 bg-indigo-600 rounded-md">
           <div>
