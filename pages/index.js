@@ -19,7 +19,7 @@ export async function getServerSideProps(context) {
 
 export default function Home({ reviews }) {
   const { user } = useAuth();
-  console.log(reviews[0]);
+  
   return (
     <>
       <Test reviews={reviews} user={user}></Test>

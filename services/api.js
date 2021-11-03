@@ -92,9 +92,17 @@ export const getReportTop = () => {
   return request.get("/reports/top");
 };
 
-export const upvote = (id, data) => {
-  return request.post("/reviews/upvote", data, {
-    params: { id },
+export const postUpvote = (reviewId, cancel) => {
+  return request.post("/reviews/upvote", {}, {
+    params: { reviewId, cancel },
     requireAuth: true,
+  });
+};
+
+
+export const postDownvote = (reviewId, cancel) => {
+  return request.post("/reviews/downvote", {},{
+    params: {reviewId, cancel},
+    requireAuth: true
   });
 };

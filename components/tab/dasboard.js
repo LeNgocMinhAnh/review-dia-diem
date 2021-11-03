@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getReport, getReportTop } from "../../services/api";
 import { toast } from "react-toastify";
+import { useAuth } from "../../services/auth";
 
 export default function Dasboard({}) {
+  const {user} = useAuth()
   const [report, setReport] = useState([]);
   const [topUsers, setTopUsers] = useState([]);
   const [topPlaces, setTopPlaces] = useState([]);
