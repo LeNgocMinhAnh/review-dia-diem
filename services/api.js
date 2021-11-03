@@ -83,3 +83,7 @@ export const getUser = ({ search = "" }) => {
 export const getReport = () => {
   return request.get("/reports");
 };
+
+export const getReportTop = () => {
+  return request.get("/reports/top");
+}

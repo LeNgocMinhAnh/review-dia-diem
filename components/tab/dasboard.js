@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import { getReport } from "../../services/api";
+import { getReport, getReportTop } from "../../services/api";
 import { toast } from "react-toastify";
 
 export default function Dasboard({ user }) {
   const [report, setReport] = useState([]);
+  const [topUsers, setTopUsers] = useState([]);
+  const [topPlaces, setTopPlaces] = useState([]);
+
+  function getPercent(percent) {
+    if (!percent) {
+      return "0%";
+    }
+    return percent.toFixed(2) + "%";
+  }
 
   useEffect(() => {
     if (!!user) {
@@ -12,10 +21,20 @@ export default function Dasboard({ user }) {
           setReport(data);
         } else toast.error("Lỗi");
       });
+
+      getReportTop().then(({ data, status }) => {
+        if (status === 200) {
+          console.log("data", data);
+          setTopUsers(data.topUsersReviews); // state thay đổi
+          setTopPlaces(data.topPlacesReviews); // too
+        } else toast.error("Lỗi");
+      });
     }
-  });
+  }, [user]); // Cái này chạy khi state thay đổi ??? -> vô hạn
+  console.log("test data:", topUsers);
+
   return (
-    <div className="flex-grow h-screen py-5 -10 md:ml-72 ">
+    <div className="flex-grow h-full py-5 -10 md:ml-72 ">
       <div className="flex ">
         <div>
           <h1 className="px-6 text-4xl font-bold text-purple mt-">
@@ -29,7 +48,7 @@ export default function Dasboard({ user }) {
             <div className="flex items-center justify-around p-6 mt-10 space-x-2 transition duration-300 transform shadow-xl bg-xanhlo rounded-xl hover:scale-105 hover:bg-yellow-400">
               <div>
                 <span className="text-sm font-semibold text-gray-400 ">
-                  Người dùng
+                  Users
                 </span>
                 <h1 className="text-2xl font-bold text-center">
                   {report.users}
@@ -57,7 +76,7 @@ export default function Dasboard({ user }) {
             <div className="flex items-center justify-around p-6 mt-10 space-x-2 transition duration-300 transform shadow-xl bg-xanhlo hover:scale-105 rounded-xl">
               <div>
                 <span className="text-sm font-semibold text-gray-400">
-                  Địa điểm
+                  Places
                 </span>
                 <h1 className="text-2xl font-bold text-center">
                   {report.places}
@@ -85,7 +104,7 @@ export default function Dasboard({ user }) {
             <div className="flex items-center justify-around p-6 mt-10 space-x-2 transition duration-300 transform shadow-xl bg-xanhlo hover:scale-105 rounded-xl">
               <div>
                 <span className="text-sm font-semibold text-gray-400">
-                  Review
+                  Reviews
                 </span>
                 <h1 className="text-2xl font-bold text-center">
                   {report.reviews}
@@ -113,7 +132,7 @@ export default function Dasboard({ user }) {
             <div className="flex items-center justify-around p-6 mt-10 space-x-2 transition duration-300 transform shadow-xl bg-xanhlo hover:scale-105 rounded-xl">
               <div>
                 <span className="text-sm font-semibold text-gray-400">
-                  Lượt thích
+                  UpVote
                 </span>
                 <h1 className="text-2xl font-bold text-center">
                   {report.likes}
@@ -141,7 +160,7 @@ export default function Dasboard({ user }) {
             <div className="flex items-center justify-around p-6 mt-10 space-x-2 transition duration-300 transform shadow-xl bg-xanhlo hover:scale-105 rounded-xl">
               <div>
                 <span className="text-sm font-semibold text-gray-400">
-                  Lượt không thích
+                  DownVote
                 </span>
                 <h1 className="text-2xl font-bold text-center">
                   {report.dislikes}
@@ -192,6 +211,106 @@ export default function Dasboard({ user }) {
                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                 />
               </svg>
+            </div>
+          </div>
+        </div>
+        <div className="col-span-12 mt-5 px-2">
+          <div className="grid gap-2 grid-cols-1 lg:grid-cols-2 items-center justify-center">
+            <div className="w-full  px-4 mx-auto ">
+              <div className="  min-w-0 break-words w-full mb-6 shadow-lg rounded-2xl  bg-white">
+                <div className=" w-full">
+                  <table className="items-center w-full  text-blueGray-700   ">
+                    <thead className="">
+                      <tr>
+                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                          Referral
+                        </th>
+                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                          Visitors
+                        </th>
+                        <th className="px-6 bg-blueGray-50 text-blueGray-700 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topUsers.map((topUser, index) => (
+                        <tr key={topUser.uid}>
+                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                            {topUser.displayName}
+                          </th>
+                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            {topUser.totalReviews}
+                          </td>
+                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <div className="flex items-center">
+                              <span className="mr-2">
+                                {getPercent(topUser.percent)}
+                              </span>
+                              <div className="relative w-full">
+                                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                                  <div
+                                    style={{
+                                      width: getPercent(topUser.percent),
+                                    }}
+                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div className="w-full  px-4 mx-auto ">
+              <div className="  min-w-0 break-words w-full mb-6 shadow-lg rounded-2xl  bg-white">
+                <div className=" w-full">
+                  <table className="items-center w-full  text-blueGray-700   ">
+                    <thead className="">
+                      <tr>
+                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                          Referral
+                        </th>
+                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                          Visitors
+                        </th>
+                        <th className="px-6 bg-blueGray-50 text-blueGray-700 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topPlaces.map((topPlace, index) => (
+                        <tr key={topPlace.uid}>
+                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                            {topPlace.name}
+                          </th>
+                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            {topPlace.totalReviews}
+                          </td>
+                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <div className="flex items-center">
+                              <span className="mr-2">
+                                50
+                              </span>
+                              <div className="relative w-full">
+                                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                                  <div
+                                    style={{
+                                      width: "50%",
+                                    }}
+                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
