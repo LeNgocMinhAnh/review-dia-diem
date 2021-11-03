@@ -38,7 +38,7 @@ export default function Dasboard({ user }) {
               <div className="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-indigo-600"
+                  className="w-8 h-8 text-indigo-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -66,7 +66,7 @@ export default function Dasboard({ user }) {
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
+                  className="w-8 h-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -94,7 +94,7 @@ export default function Dasboard({ user }) {
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
+                  className="w-8 h-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -122,7 +122,7 @@ export default function Dasboard({ user }) {
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
+                  className="w-8 h-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -150,7 +150,7 @@ export default function Dasboard({ user }) {
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
+                  className="w-8 h-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -167,8 +167,8 @@ export default function Dasboard({ user }) {
           </div>
         </div>
 
-        <div className="flex mt-10 space-x-10">
-          <div className="flex items-center justify-around w-2/3 p-8 bg-white shadow-lg rounded-xl">
+        <div className="w-full mt-10 ">
+          <div className="container flex items-center justify-around p-8 bg-white shadow-lg rounded-xl">
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-gray-400">
                 Lượt truy cập
