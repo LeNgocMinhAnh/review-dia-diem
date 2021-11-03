@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getReport, getReportTop } from "../../services/api";
 import { toast } from "react-toastify";
 
-export default function Dasboard({ user }) {
+export default function Dasboard({}) {
   const [report, setReport] = useState([]);
   const [topUsers, setTopUsers] = useState([]);
   const [topPlaces, setTopPlaces] = useState([]);
@@ -214,44 +214,44 @@ export default function Dasboard({ user }) {
             </div>
           </div>
         </div>
-        <div className="col-span-12 mt-5 px-2">
-          <div className="grid gap-2 grid-cols-1 lg:grid-cols-2 items-center justify-center">
-            <div className="w-full  px-4 mx-auto ">
-              <div className="  min-w-0 break-words w-full mb-6 shadow-lg rounded-2xl  bg-white">
-                <div className=" w-full">
-                  <table className="items-center w-full  text-blueGray-700   ">
-                    <thead className="">
-                      <tr>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Referral
+        <div className="col-span-12 px-2 mt-5">
+          <div className="grid items-center justify-center grid-cols-1 gap-2 lg:grid-cols-2">
+            <div className="w-full px-4 mx-auto ">
+              <div className="w-full min-w-0 mb-6 break-words bg-white shadow-lg rounded-2xl">
+                <div className="w-full ">
+                  <table className="items-center w-full text-blueGray-700 ">
+                    <thead>
+                      <tr className="">
+                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border-l-0 border-r-0 bg-xanhlo text-blueGray-500 whitespace-nowrap">
+                          User
                         </th>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Visitors
+                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border-l-0 border-r-0 bg-xanhlo text-blueGray-500 whitespace-nowrap">
+                          Total
                         </th>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-700 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px" />
+                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border-l-0 border-r-0 bg-xanhlo text-blueGray-700 whitespace-nowrap min-w-140-px" />
                       </tr>
                     </thead>
                     <tbody>
                       {topUsers.map((topUser, index) => (
                         <tr key={topUser.uid}>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                          <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             {topUser.displayName}
                           </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             {topUser.totalReviews}
                           </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             <div className="flex items-center">
                               <span className="mr-2">
                                 {getPercent(topUser.percent)}
                               </span>
                               <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                                <div className="flex h-2 overflow-hidden text-xs bg-purple-200 rounded">
                                   <div
                                     style={{
                                       width: getPercent(topUser.percent),
                                     }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
+                                    className="flex flex-col justify-center text-center text-white bg-purple-500 shadow-none whitespace-nowrap"
                                   />
                                 </div>
                               </div>
@@ -264,42 +264,42 @@ export default function Dasboard({ user }) {
                 </div>
               </div>
             </div>
-            <div className="w-full  px-4 mx-auto ">
-              <div className="  min-w-0 break-words w-full mb-6 shadow-lg rounded-2xl  bg-white">
-                <div className=" w-full">
-                  <table className="items-center w-full  text-blueGray-700   ">
+            <div className="w-full px-4 mx-auto ">
+              <div className="w-full min-w-0 mb-6 break-words bg-white shadow-lg rounded-2xl">
+                <div className="w-full ">
+                  <table className="items-center w-full text-blueGray-700 ">
                     <thead className="">
                       <tr>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Referral
+                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border-l-0 border-r-0 bg-blueGray-50 text-blueGray-500 whitespace-nowrap">
+                          Place
                         </th>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Visitors
+                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border-l-0 border-r-0 bg-blueGray-50 text-blueGray-500 whitespace-nowrap">
+                          Total
                         </th>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-700 align-middle  py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px" />
+                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border-l-0 border-r-0 bg-blueGray-50 text-blueGray-700 whitespace-nowrap min-w-140-px" />
                       </tr>
                     </thead>
                     <tbody>
                       {topPlaces.map((topPlace, index) => (
                         <tr key={topPlace.uid}>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                          <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             {topPlace.name}
                           </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             {topPlace.totalReviews}
                           </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             <div className="flex items-center">
                               <span className="mr-2">
-                                50
+                                {getPercent(topPlace.percent)}
                               </span>
                               <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                                <div className="flex h-2 overflow-hidden text-xs bg-purple-200 rounded">
                                   <div
                                     style={{
-                                      width: "50%",
+                                      width: getPercent(topPlace.percent),
                                     }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
+                                    className="flex flex-col justify-center text-center text-white bg-purple-500 shadow-none whitespace-nowrap"
                                   />
                                 </div>
                               </div>

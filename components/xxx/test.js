@@ -3,31 +3,33 @@ import brgif from "../xxx/RainyDays.gif";
 import Review from "../review";
 import Search from "../search";
 import Navbar from "../navbar/Navbar";
+import { useAuth } from "../../services/auth";
 
-export default function test({ reviews, place, user }) {
+export default function test({ reviews, place }) {
+  const { user } = useAuth();
   return (
     <>
       <Navbar user={user} />
-      <div className="h-screen flex flex-col pt-20">
-        <div className=" relative overflow-hien to-pink-500 border-4 border-white">
-          <div className="inset-0 h-auto opacity-50 absolute overflow-auto">
+      <div className="flex flex-col h-screen pt-20">
+        <div className="relative border-4 border-white overflow-hien to-pink-500">
+          <div className="absolute inset-0 h-auto overflow-auto opacity-50">
             <img
               src={brtest}
-              className="absolute object-cover overflow-auto h-full w-full "
+              className="absolute object-cover w-full h-full overflow-auto "
             ></img>
           </div>
-          <div className="container rounded-lg mx-auto w-4/5 relative z-10 flex items-center py-12 my-20 md:my-32 overflow-auto">
+          <div className="container relative z-10 flex items-center w-4/5 py-12 mx-auto my-20 overflow-auto rounded-lg md:my-32">
             <img
-              className="border-2 border-white rounded-2xl z-10 w-auto absolute object-cover bg-opacity-25 w-full h-full flex flex-col overflow-auto  "
+              className="absolute z-10 flex flex-col object-cover w-auto w-full h-full overflow-auto bg-opacity-25 border-2 border-white rounded-2xl "
               src={brgif}
             ></img>
 
-            <div className="w-full h-full flex flex-col items-center justify-between relative z-10 bg-opacity-50 overflow-hidden">
+            <div className="relative z-10 flex flex-col items-center justify-between w-full h-full overflow-hidden bg-opacity-50">
               <p className=" text-center items-center text-#FFFFFF  md:text-2xl overflow-auto font-bold font-BlinkMacSystemFont">
                 Review tất tần tật về trường học của bạn nào !!!
               </p>
               <div className="w-4/5">
-                <div className="p-5 w-full">
+                <div className="w-full p-5">
                   <Search></Search>
                 </div>
               </div>
@@ -35,7 +37,7 @@ export default function test({ reviews, place, user }) {
           </div>
         </div>
 
-        <div className="container mx-auto relative  md:-mt-6 mb-16">
+        <div className="container relative mx-auto mb-16 md:-mt-6">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-y-4 xl:gap-x-4">
             <div className="col-span-2 bg-gray-100 rounded-md">
               <Review reviews={reviews} />
@@ -50,12 +52,12 @@ export default function test({ reviews, place, user }) {
           </div>
         </div>
 
-        <footer className="footer bg-xanh31c2b8 relative pt-1 border-b-2 border-blue-700 flex py-16 my-24">
-          <div className="container mx-auto px-6">
+        <footer className="relative flex py-16 pt-1 my-24 border-b-2 border-blue-700 footer bg-xanh31c2b8">
+          <div className="container px-6 mx-auto">
             <div className="sm:flex sm:mt-8">
-              <div className="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
-                <div className="flex flex-col font-BlinkMacSystemFont text-GhostWhite text-lg ">
-                  <span className="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">
+              <div className="flex flex-col justify-between mt-8 sm:mt-0 sm:w-full sm:px-8 md:flex-row">
+                <div className="flex flex-col text-lg font-BlinkMacSystemFont text-GhostWhite ">
+                  <span className="mt-4 mb-2 font-bold text-gray-700 uppercase md:mt-0">
                     REVIEW CÔNG TY
                   </span>
                   <span className="my-2">
@@ -69,7 +71,7 @@ export default function test({ reviews, place, user }) {
                   <span className="my-2">
                     <a
                       href="#"
-                      className="text-blue-700  text-md hover:text-blue-500"
+                      className="text-blue-700 text-md hover:text-blue-500"
                     >
                       Yêu cầu thêm công ty
                     </a>

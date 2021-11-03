@@ -28,6 +28,10 @@ request.interceptors.request.use(async (config) => {
   return config;
 });
 
+export const setRequestToken = (token) => {
+  return (request.defaults.headers.authorization = `Bearer ${token}`);
+};
+
 export const getRecentReview = () => {
   return request.get("/reviews");
 };
@@ -86,4 +90,11 @@ export const getReport = () => {
 
 export const getReportTop = () => {
   return request.get("/reports/top");
-}
+};
+
+export const upvote = (id, data) => {
+  return request.post("/reviews/upvote", data, {
+    params: { id },
+    requireAuth: true,
+  });
+};

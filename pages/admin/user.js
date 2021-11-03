@@ -6,10 +6,11 @@ import Sidebar from "../../components/admin/sidebar";
 import NavbarAdmin from "../../components/navbar/nav-admin";
 import AddUser from "../../components/tab/add-user";
 import { useDebounce } from "../../services/hooks";
+import { useAuth } from "../../services/auth";
 
-export default function UserManage({ user }) {
+export default function UserManage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const { user } = useAuth();
   const toggleSidebar = useCallback(
     () => setSidebarOpen((prevState) => !prevState),
     []

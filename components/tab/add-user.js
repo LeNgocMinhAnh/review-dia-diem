@@ -190,10 +190,7 @@ export default function AddUser({
                           />
                         </svg>
                       </div>
-                      <div
-                        onClick={() => onClickDeletePlace(place)}
-                        className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                      >
+                      <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"

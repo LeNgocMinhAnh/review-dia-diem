@@ -9,8 +9,10 @@ import Link from "next/link";
 import { CgPlayListAdd } from "react-icons/cg";
 import { route } from "next/dist/next-server/server/router";
 // import router, { useRouter } from 'next/router'
+import { useAuth } from "../../services/auth";
 
-export default function Navbar({ user, signout }) {
+export default function Navbar({ signout }) {
+  const { user } = useAuth();
   return (
     <>
       <div
@@ -42,7 +44,7 @@ const DropDown = ({ logout, setting }) => {
     <div className="absolute  w-40 mt-2 py-2 px-1.5  bg-FDF5E6  rounded shadow-xl">
       <a
         href="#"
-        className="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        className="flex items-center transition-colors duration-200 transform border-r-4 border-transparent hover:border-red-600"
         onClick={setting}
       >
         <div className="mr-3">
@@ -74,7 +76,7 @@ const DropDown = ({ logout, setting }) => {
       </div>
       <a
         href="#"
-        className="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600"
+        className="flex items-center transition-colors duration-200 transform border-r-4 border-transparent hover:border-red-600"
         onClick={logout}
       >
         <div className="mr-3 text-red-600">

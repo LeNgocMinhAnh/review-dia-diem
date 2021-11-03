@@ -6,8 +6,10 @@ import PlaceForm from "../../components/admin/place-form";
 import Sidebar from "../../components/admin/sidebar";
 import { useEffect, useState, useCallback } from "react";
 import SidebarMobile from "../../components/admin/sidebar-mobile";
+import { useAuth } from "../../services/auth";
 
-export default function PlaceManage({ user }) {
+export default function PlaceManage() {
+  const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = useCallback(

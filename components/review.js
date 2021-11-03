@@ -3,21 +3,26 @@ import StarRatings from "react-star-ratings";
 import { formatTime } from "../services/time";
 
 export default function Review({ place, reviews }) {
+  const onClickUpvote = (review) => {};
+
   return reviews.map((review, index) => (
-    <div key={review.id} className="p-4 md:p-8 w-full border-gray-200 border-0 divide-y divide-gray-300 ">
-      <div className="flex items-start   ">
+    <div
+      key={review.id}
+      className="w-full p-4 border-0 border-gray-200 divide-y divide-gray-300 md:p-8 "
+    >
+      <div className="flex items-start ">
         <div className="flex-shrink-0">
-          <div className="inline-block relative">
-            <div className="relative w-16 h-16 rounded-full overflow-hidden">
+          <div className="relative inline-block">
+            <div className="relative w-16 h-16 overflow-hidden rounded-full">
               <img
-                className="absolute top-0 left-0 w-full h-full bg-cover object-fit object-cover"
+                className="absolute top-0 left-0 object-cover w-full h-full bg-cover object-fit"
                 src={review.author.displayImage}
                 alt="Profile picture"
               />
               <div className="absolute top-0 left-0 w-full h-full rounded-full shadow-inner" />
             </div>
             <svg
-              className="fill-current text-white bg-green-600 rounded-full p-1 absolute bottom-0 right-0 w-6 h-6 -mx-1 -my-1"
+              className="absolute bottom-0 right-0 w-6 h-6 p-1 -mx-1 -my-1 text-white bg-green-600 rounded-full fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -28,14 +33,14 @@ export default function Review({ place, reviews }) {
             </svg>
           </div>
         </div>
-        <div className="m-4 md:ml-6 w-full -mt-1 ">
-          <p className="inline-block items-baseline ">
-            <span className="text-gray-600 font-bold cursor-pointer">
+        <div className="w-full m-4 -mt-1 md:ml-6 ">
+          <p className="items-baseline inline-block ">
+            <span className="font-bold text-gray-600 cursor-pointer">
               {review.author.displayName}
             </span>
-            <span className="text-green-600 font-medium mx-2">đã review</span>
+            <span className="mx-2 font-medium text-green-600">đã review</span>
             <Link href={place?.url || review.place?.url}>
-              <span className="text-green-600 hover:text-green-800 font-bold cursor-pointer">
+              <span className="font-bold text-green-600 cursor-pointer hover:text-green-800">
                 {place?.name || review.place?.name}
               </span>
             </Link>
@@ -56,14 +61,17 @@ export default function Review({ place, reviews }) {
               <span className="text-sm">{formatTime(review.createdAt)}</span>
             </div>
           </div>
-          <div className="mt-3 text-left  ">
+          <div className="mt-3 text-left ">
             <span className="font-bold">{review.title}</span>
             <p className="not-italic whitespace-pre-wrap">{review.content}</p>
           </div>
-          {review.images.length > 0? <div className="grid grid-cols-5 gap-2 py-2">
-            {review.images.map((src) => <img key={src} className="h-40 w-full object-cover" src={src} /> )}
-          </div> :null}
-          
+          {review.images.length > 0 ? (
+            <div className="grid grid-cols-5 gap-2 py-2">
+              {review.images.map((src) => (
+                <img key={src} className="object-cover w-full h-40" src={src} />
+              ))}
+            </div>
+          ) : null}
 
           <div className="flex items-center justify-between mt-4 text-sm text-gray-600 fill-current">
             <button className="flex items-center">
@@ -77,9 +85,11 @@ export default function Review({ place, reviews }) {
               <span className="ml-2">Share</span>
             </button>
             <div className="flex items-center">
-              <button className="flex items-center ml-6">
+              <button className="flex items-center ml-6 ">
                 <svg
-                  className="w-3 h-3"
+                  className={`w-3 h-3 ${
+                    review.upvoted ? "text-TimNhat" : "text-xanh31c2b8"
+                  } `}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >

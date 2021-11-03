@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { getPlaceBySlug } from "../../services/api";
+import { getPlaceBySlug, setRequestToken } from "../../services/api";
 import { useRouter } from "next/router";
 
 import { useEffect, useState, useCallback } from "react";
@@ -12,11 +12,15 @@ import Review from "../../components/review";
 import NavBar from "../../components/navbar/Navbar";
 
 import { FiMapPin } from "react-icons/fi";
+import nookies from "nookies";
 
 import brtest from "../../components/xxx/brtest.jpg";
 import br from "../truong-dai-hoc/banner.jpg";
+import { useAuth } from "../../services/auth";
 
 export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  setRequestToken(cookies.token);
   const { status, data = null } = await getPlaceBySlug(context.query.slug);
   console.log(status);
   return {
@@ -26,8 +30,9 @@ export async function getServerSideProps(context) {
     },
   };
 }
-export default function Place({ place, user }) {
+export default function Place({ place }) {
   const router = useRouter();
+  const { user } = useAuth();
   const login = () => {
     return router.push("/user/login");
   };
@@ -62,12 +67,12 @@ export default function Place({ place, user }) {
       </Head>
       <NavBar user={user}></NavBar>
       <div
-        className="h-full w-full pt-20 bg-xanhlo  "
+        className="w-full h-full pt-20 bg-xanhlo "
         style={{ backgroundImage: 'url("")' }}
       >
-        <div className=" container mx-auto grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-y-4 md:gap-x-4 pb-24 md:mt-5 p-2">
+        <div className="container grid grid-cols-1 gap-0 p-2 pb-24 mx-auto md:grid-cols-5 md:gap-y-4 md:gap-x-4 md:mt-5">
           <div className="col-span-3">
-            <h1 className=" text-2xl font-medium mb-2 ">{place.name}</h1>
+            <h1 className="mb-2 text-2xl font-medium ">{place.name}</h1>
             <div className="flex items-center ">
               <StarRatings
                 rating={place.star}
@@ -77,16 +82,16 @@ export default function Place({ place, user }) {
                 name="rating"
                 starSpacing="2px"
               />
-              <div className="ml-2 font-medium items-center">
+              <div className="items-center ml-2 font-medium">
                 ({place.star.toFixed(1)})
               </div>
             </div>
-            <p className="flex mt-3 mb-3 inline-block text-sm items-center ">
+            <p className="flex items-center inline-block mt-3 mb-3 text-sm ">
               <FiMapPin></FiMapPin>
               {place.address}
             </p>
 
-            <div className="  ">{place.description} </div>
+            <div className="">{place.description} </div>
           </div>
           <div className="col-span-2 ">
             <Map
@@ -101,7 +106,7 @@ export default function Place({ place, user }) {
       <div className="container mx-auto mb-8 -mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-y-4 lg:gap-x-4">
           {/* LEFT COLUMN */}
-          <div className="col-span-2 xl:col-span-3 bg-gray-50 rounded-md">
+          <div className="col-span-2 rounded-md xl:col-span-3 bg-gray-50">
             {/* REVIEW SECTION */}
             <Review place={place} reviews={place.reviews} />
             {/* END REVIEW SECTION */}
@@ -126,12 +131,12 @@ export default function Place({ place, user }) {
         place={place}
       ></ReviewForm>
 
-      <footer className="footer bg-xanh31c2b8 relative pt-1 border-b-2 border-blue-700 flex py-16 my-24">
-        <div className="container mx-auto px-6">
+      <footer className="relative flex py-16 pt-1 my-24 border-b-2 border-blue-700 footer bg-xanh31c2b8">
+        <div className="container px-6 mx-auto">
           <div className="sm:flex sm:mt-8">
-            <div className="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
-              <div className="flex flex-col font-BlinkMacSystemFont text-GhostWhite text-lg ">
-                <span className="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">
+            <div className="flex flex-col justify-between mt-8 sm:mt-0 sm:w-full sm:px-8 md:flex-row">
+              <div className="flex flex-col text-lg font-BlinkMacSystemFont text-GhostWhite ">
+                <span className="mt-4 mb-2 font-bold text-gray-700 uppercase md:mt-0">
                   REVIEW CÔNG TY
                 </span>
                 <span className="my-2">
@@ -145,7 +150,7 @@ export default function Place({ place, user }) {
                 <span className="my-2">
                   <a
                     href="#"
-                    className="text-blue-700  text-md hover:text-blue-500"
+                    className="text-blue-700 text-md hover:text-blue-500"
                   >
                     Yêu cầu thêm công ty
                   </a>
@@ -168,25 +173,25 @@ export default function Place({ place, user }) {
 }
 
 {
-  /*<div className=" bg-black">
-          <header className="text-gray-100 bg-FFE1FF body-font shadow w-full">
-            <div className="container mx-auto flex flex-wrap p-2 flex-col md:flex-row items-center">
+  /*<div className="bg-black ">
+          <header className="w-full text-gray-100 shadow bg-FFE1FF body-font">
+            <div className="container flex flex-col flex-wrap items-center p-2 mx-auto md:flex-row">
               <img
                 src="https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/48427248_382665845802353_2135083600675078144_n.png?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=IGAXOh6mIB0AX-zV8Np&_nc_oc=AQmM-GibVWZAKntIHRpMuMu-22y28hsAqm40E4mSvXDWtJKBCckYjdvkqboS928OIzw4EYF8eZ1RCZFTh-kPUR51&_nc_ht=scontent-sin6-2.xx&oh=6fb8df698297f31b8c49a96d51ca6b25&oe=60D560E8"
                 style={{ height: 40, marginTop: 10, marginBottom: 10 }}
                 alt="logo"
               />
               <span className="ml-3 text-xl">Ở Đây Có Review Nè</span>
-              {/*<div className="pt-2 relative mx-auto text-gray-600">
+              {/*<div className="relative pt-2 mx-auto text-gray-600">
             <input
-              className="border-2 border-gray-300 bg-white h-10 px-20 pr-16 rounded-lg text-sm focus:outline-none"
+              className="h-10 px-20 pr-16 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
               type="search"
               name="search"
               placeholder="Search"
             />
-            <button type="submit" className="absolute right-0 top-0 mt-5 mr-4">
+            <button type="submit" className="absolute top-0 right-0 mt-5 mr-4">
               <svg
-                className="text-gray-600 h-4 w-4 fill-current"
+                className="w-4 h-4 text-gray-600 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
                 version="1.1"
