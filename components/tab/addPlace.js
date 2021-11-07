@@ -2,6 +2,7 @@ import { getPlace, deletePlace } from "../../services/api";
 import PlaceForm from "../admin/place-form";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Swal from "sweetalert2";
+import EditPlace from "../admin/edit-place";
 
 export default function AddPlace({
   total,
@@ -12,6 +13,13 @@ export default function AddPlace({
 }) {
   const [allPlace, setAllPlace] = useState(places);
 
+  const [id, setID] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
+  const [locationX, setLocationX] = useState("");
+  const [locationY, setLocationY] = useState("");
+
   const setSearchTextChange = useCallback((event) => {
     setSearchText(event.target.value);
   }, []);
@@ -21,8 +29,20 @@ export default function AddPlace({
     setShowPlaceForm((prevState) => !prevState);
   }, []);
 
+  const [isShowEditPlace, setShowEditPlace] = useState(false);
+  const showOrHideEditPlace = useCallback((place) => {
+    console.log("click edit", place);
+    setID(place.id);
+    setName(place.name);
+    setDescription(place.description);
+    setAddress(place.address);
+    setLocationX(place.location.coordinates[0]);
+    setLocationY(place.location.coordinates[1]);
+    setShowEditPlace(true);
+    console.log(isShowEditPlace);
+  }, []);
+
   const onClickDeletePlace = (place) => {
-    console.log(place);
     Swal.fire({
       title: "Xóa địa điểm!",
       text: `Bạn có muốn xóa ${place.name} khum`,
@@ -185,7 +205,10 @@ export default function AddPlace({
                             />
                           </svg>
                         </div>
-                        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                        <div
+                          className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                          onClick={() => showOrHideEditPlace(place)}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -231,6 +254,20 @@ export default function AddPlace({
         visible={isShowPlaceForm}
         showOrHidePlaceForm={showOrHidePlaceForm}
       ></PlaceForm>
+      <EditPlace
+        visible={isShowEditPlace}
+        showOrHideEditPlace={showOrHideEditPlace}
+        id={id}
+        name={name}
+        description={description}
+        address={address}
+        setName={setName}
+        locationX={locationX}
+        locationY={locationY}
+        setDescription={setDescription}
+        setAddress={setAddress}
+        setShowEditPlace={setShowEditPlace}
+      ></EditPlace>
     </div>
   );
 }

@@ -80,6 +80,10 @@ export const addPlace = (data) => {
   return request.post("/places", data, { requireAuth: true });
 };
 
+export const editPlace = (id, data) => {
+  return request.put("/places", data, { params: { id }, requireAuth: true });
+};
+
 export const getUser = ({ search = "" }) => {
   return request.get("/user/list", { params: { search }, requireAuth: true });
 };
@@ -93,16 +97,23 @@ export const getReportTop = () => {
 };
 
 export const postUpvote = (reviewId, cancel) => {
-  return request.post("/reviews/upvote", {}, {
-    params: { reviewId, cancel },
-    requireAuth: true,
-  });
+  return request.post(
+    "/reviews/upvote",
+    {},
+    {
+      params: { reviewId, cancel },
+      requireAuth: true,
+    }
+  );
 };
 
-
 export const postDownvote = (reviewId, cancel) => {
-  return request.post("/reviews/downvote", {},{
-    params: {reviewId, cancel},
-    requireAuth: true
-  });
+  return request.post(
+    "/reviews/downvote",
+    {},
+    {
+      params: { reviewId, cancel },
+      requireAuth: true,
+    }
+  );
 };
