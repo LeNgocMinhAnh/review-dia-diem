@@ -5,6 +5,7 @@ import Review from "../components/review";
 import nookies from "nookies";
 import Test from "../components/xxx/test";
 import { useAuth } from "../services/auth";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export async function getServerSideProps(context) {
   const cookies = nookies.get(context);
@@ -13,16 +14,62 @@ export async function getServerSideProps(context) {
   return {
     props: {
       reviews: data.results,
+      hasNext: data.hasNext,
     },
   };
 }
 
-export default function Home({ reviews }) {
+export default function Home({ reviews, hasNext }) {
   const { user } = useAuth();
-  
+
+  const [allReviews, setAllReviews] = useState(reviews);
+  const [isLoading, setLoading] = useState(false);
+
+  const reviewLengthRef = useRef(allReviews.length);
+  const loadingRef = useRef(false);
+  const hasNextRef = useRef(hasNext);
+
+  useEffect(() => {
+    reviewLengthRef.current = allReviews.length;
+  }, [allReviews]);
+
+  const fetchMoreReviews = useCallback(async () => {
+    console.log(
+      "fetchMoreReviews hasNextRef.current",
+      hasNextRef.current,
+      !loadingRef.current
+    );
+    if (hasNextRef.current && !loadingRef.current) {
+      loadingRef.current = true;
+      setLoading(true);
+      const { data } = await getRecentReview(reviewLengthRef.current);
+      hasNextRef.current = data.hasNext;
+      setAllReviews((prevState) => [...prevState, ...data.results]);
+      setLoading(false);
+      loadingRef.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
+    // Check la trinh duyet
+    if (typeof window !== undefined) {
+      const handleScroll = function () {
+        if (
+          document.body.scrollHeight - window.innerHeight - window.scrollY <
+          800
+        ) {
+          fetchMoreReviews();
+        }
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
+
   return (
     <>
-      <Test reviews={reviews} user={user}></Test>
+      <Test reviews={allReviews} user={user}></Test>
+      {(isLoading && <h1 className="text-4xl">Loading.....</h1>) || null}
       {/* <header className="w-full text-gray-100 shadow bg-primary body-font">
         <div className="container flex flex-col flex-wrap items-center p-2 mx-auto md:flex-row">
           <img

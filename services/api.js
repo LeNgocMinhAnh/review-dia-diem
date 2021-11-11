@@ -32,8 +32,14 @@ export const setRequestToken = (token) => {
   return (request.defaults.headers.authorization = `Bearer ${token}`);
 };
 
-export const getRecentReview = () => {
-  return request.get("/reviews");
+export const getRecentReview = (skip = 0, limit = 10) => {
+  return request.get("/reviews", {
+    params: {
+      limit,
+      skip,
+    },
+    requireAuth: true,
+  });
 };
 
 export const getPlaceBySlug = (slug) => {

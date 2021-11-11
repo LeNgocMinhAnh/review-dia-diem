@@ -12,6 +12,16 @@ export default function PlaceManage() {
   const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = function () {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        console.log("you're at the bottom of the page");
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const toggleSidebar = useCallback(
     () => setSidebarOpen((prevState) => !prevState),
     []
@@ -50,7 +60,7 @@ export default function PlaceManage() {
     );
   }
   return (
-    <>
+    <div>
       <NavbarAdmin user={user} toggleSidebar={toggleSidebar}></NavbarAdmin>
       <div className="flex flex-row pt-20 bg-gray-50">
         {/**Sidebar */}
@@ -66,6 +76,6 @@ export default function PlaceManage() {
           setSearchText={setSearchText}
         ></AddPlace>
       </div>
-    </>
+    </div>
   );
 }
